@@ -7,7 +7,7 @@ import {faCoffee } from '@fortawesome/free-solid-svg-icons';
 
 import avatarUrl from '../images/profile.jpg';
 import { Link } from 'react-router-dom';
-
+import Gravatar from './Gravatar';
 library.add( faCoffee);
 
 
@@ -28,11 +28,7 @@ class BadgesListItem extends React.Component{
           return(
             <li className="BadgesListItem" key={badge.id}>
               <div className="BadgesListItem">
-              <img
-                className="BadgesListItem__avatar"
-                src={badge.avatarUrl}
-                alt="logo"
-              />
+              <Gravatar className="Badge__avatar" email={badge.email} alt="Avatar"/>
 
               <div>
                 <strong>
