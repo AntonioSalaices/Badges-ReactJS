@@ -29,11 +29,11 @@ state = {
   componentDidMount(){
     this.fetchData()
 
-    this.IdInterval = setInterval(this.fetchData, 5000);
+    // this.IdInterval = setInterval(this.fetchData, 5000);
   }
-  componentWillUnmount(){
-    clearInterval(this.IdInterval);
-  }
+  // componentWillUnmount(){
+  //   clearInterval(this.IdInterval);
+  // }
 
   fetchData = async () =>{
     this.setState({
