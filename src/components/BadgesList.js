@@ -10,21 +10,64 @@ import { Link } from 'react-router-dom';
 import Gravatar from './Gravatar';
 library.add( faCoffee);
 
+function useSearchBadges(badges) {
+  const [query, setQuery]= React.useState('')
+  const [filteredBadges, setFilteredBadges] = React.useState(badges);
 
-class BadgesListItem extends React.Component{
-  render(){
+  React.useMemo(()=>{ 
+    const result = badges.filter(badge=>{
+    return `${badge.firstName} ${badge.lastName}`.toLowerCase().includes(query.toLowerCase());
+  });
+  setFilteredBadges(result);
+  },[badges,query]);
 
-    if(this.props.badges.length===0){
+  return {setQuery, filteredBadges}
+}
+
+function BadgesListItem(props){
+
+    const badges = props.badges;
+    const { query, setQuery, filteredBadges } = useSearchBadges(badges);
+
+
+    if(filteredBadges.length===0){
       return(
         <div>
+          <div className="form-group">
+            <label>Filter Badges</label>
+            <input
+              type="text"
+              className="form-control"
+              value={query}
+              onChange={e => {
+                // console.log(e.target.value);
+                setQuery(e.target.value);
+              }}
+            />
+          </div>
           <h3>No badges were found</h3>
           <Link className="btn btn-primary" to="badges/new/">Create new badge</Link>
         </div>
-      )
+      );
     }
     return(
-      <ul className="BadgesList">
-        {this.props.badges.map(badge =>{
+      <div className="BadgesList">
+      <div className="form-group">
+        <label>Filter Badges</label>
+        <input
+          type="text"
+          className="form-control"
+          value={query}
+          onChange={e => {
+            // console.log(e.target.value);
+            setQuery(e.target.value);
+          }}
+        />
+      </div>
+
+      
+      <ul className="list-unstyled">
+        {filteredBadges.map(badge =>{
           return(
             <li className="BadgesListItem" key={badge.id}>
               <Link className="text-reset text-decoration-none" to={`/badges/${badge.id}`}>
@@ -45,9 +88,9 @@ class BadgesListItem extends React.Component{
           )
         })}
       </ul>
+      </div>
     );
   }
-}
 export default BadgesListItem;
 
 // class BadgesListItem extends React.Component {
